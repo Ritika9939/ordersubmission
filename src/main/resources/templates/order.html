@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Order Page</title>
+</head>
+<body>
+<h1>Order Page</h1>
+
+<form action="#" th:action="@{/submitOrder}" th:object="${orderForm}" method="post">
+    <label for="itemSelect">Select Item:</label>
+    <select id="itemSelect" name="itemId" th:field="*{itemId}">
+        <option th:each="item : ${itemList}" th:value="${item.itemId}" th:text="${item.itemName}"></option>
+    </select>
+
+    <label for="quantityInput">Quantity:</label>
+    <input type="number" id="quantityInput" name="quantity" th:field="*{quantity}" required>
+
+    <button type="submit">Add Item</button>
+</form>
+
+<h2>Order Summary</h2>
+<table>
+    <thead>
+    <tr>
+        <th>Item Name</th>
+        <th>Quantity</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="orderItem : ${orderForm.orderItems}">
+        <td th:text="${orderItem.itemName}"></td>
+        <td th:text="${orderItem.quantity}"></td>
+    </tr>
+    </tbody>
+</table>
+
+<p>Total Amount: <span th:text="${orderForm.totalAmount}"></span></p>
+
+<form action="#" th:action="@{/submitOrder}" th:object="${orderForm}" method="post">
+    <button type="submit">Submit Order</button>
+</form>
+</body>
+</html>
